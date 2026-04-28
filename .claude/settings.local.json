@@ -3,7 +3,23 @@
     "allow": [
       "Bash(docker run *)",
       "WebFetch(domain:docs.docker.com)",
-      "Bash(docker compose *)"
+      "Bash(docker compose *)",
+      "WebFetch(domain:developers.redhat.com)",
+      "Bash(cp c:/ims/bzz/210/6/6.2/full/* c:/ims/bzz/210/full/)",
+      "Bash(Remove-Item -Recurse -Force c:/ims/bzz/210/6/6.2/full)",
+      "PowerShell(Copy-Item c:/ims/bzz/210/6/6.2/Dockerfile c:/ims/bzz/210/full/)",
+      "PowerShell(Copy-Item c:/ims/bzz/210/6/6.2/docker-compose.yml c:/ims/bzz/210/full/)",
+      "PowerShell(Copy-Item c:/ims/bzz/210/6/6.2/index.html c:/ims/bzz/210/full/)",
+      "PowerShell(New-Item -ItemType Directory -Force c:/ims/bzz/210/full/with-deployment)",
+      "PowerShell(Move-Item c:/ims/bzz/210/full/010-PVC.yaml c:/ims/bzz/210/full/with-deployment/)",
+      "PowerShell(Move-Item c:/ims/bzz/210/full/020-secrets.yaml c:/ims/bzz/210/full/with-deployment/)",
+      "PowerShell(Move-Item c:/ims/bzz/210/full/030-Deployment.yaml c:/ims/bzz/210/full/with-deployment/)",
+      "PowerShell(Move-Item c:/ims/bzz/210/full/040-Service.yaml c:/ims/bzz/210/full/with-deployment/)",
+      "PowerShell(Move-Item c:/ims/bzz/210/full/050-Route.yaml c:/ims/bzz/210/full/with-deployment/)",
+      "PowerShell(Move-Item c:/ims/bzz/210/full/060-HPA.yaml c:/ims/bzz/210/full/with-deployment/)"
+    ],
+    "additionalDirectories": [
+      "c:\\ims\\bzz\\210\\6\\6.2\\full"
     ]
   }
 }

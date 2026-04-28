@@ -4,7 +4,7 @@ on:
   push:
     branches: [master]
     paths:
-      - '6/6.2/**'
+      - 'full/**'
 
 jobs:
   build-and-deploy:
@@ -22,7 +22,7 @@ jobs:
       - name: Build and push
         uses: docker/build-push-action@v6
         with:
-          context: ./6/6.2
+          context: ./full
           push: true
           tags: ghcr.io/${{ github.actor }}/html-openshift-app:v${{ github.run_number }}
 
