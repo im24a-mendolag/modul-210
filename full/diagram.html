@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Infrastructure Diagram</title>
+  <style>
+    body {
+      margin: 0;
+      background: #f8fafc;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      font-family: 'Segoe UI', sans-serif;
+    }
+    .wrapper {
+      display: flex;
+      gap: 32px;
+      align-items: flex-start;
+      padding: 32px;
+    }
+    .sidebar {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      min-width: 220px;
+    }
+    .snippet {
+      background: #0f172a;
+      border-radius: 6px;
+      padding: 6px 10px;
+    }
+    .snippet-header {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 4px;
+    }
+    .badge {
+      background: #334155;
+      color: white;
+      font-size: 10px;
+      font-weight: 700;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .snippet-label {
+      font-size: 10px;
+      color: #94a3b8;
+    }
+    pre {
+      margin: 0;
+      font-family: monospace;
+      font-size: 9.5px;
+      line-height: 1.5;
+      color: white;
+    }
+    .key { color: #7dd3fc; }
+    .val { color: #86efac; }
+  </style>
+</head>
+<body>
+<div class="wrapper">
+
+  <!-- DIAGRAM -->
+  <svg width="720" height="580" viewBox="0 0 720 580" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+        <path d="M0,0 L0,6 L8,3 z" fill="#94a3b8"/>
+      </marker>
+      <marker id="arrPurple" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+        <path d="M0,0 L0,6 L8,3 z" fill="#c084fc"/>
+      </marker>
+      <marker id="arrOrange" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+        <path d="M0,0 L0,6 L8,3 z" fill="#fb923c"/>
+      </marker>
+    </defs>
+
+    <rect width="720" height="580" fill="#f8fafc" rx="16"/>
+    <text x="360" y="36" text-anchor="middle" font-size="15" font-weight="600" fill="#1e293b">OpenShift Infrastructure — html-openshift-app</text>
+
+    <!-- HPA -->
+    <rect x="60" y="70" width="120" height="60" rx="10" fill="#fdf4ff" stroke="#c084fc" stroke-width="1.5"/>
+    <text x="120" y="96" text-anchor="middle" font-size="11" font-weight="600" fill="#7e22ce">HPA</text>
+    <text x="120" y="112" text-anchor="middle" font-size="10" fill="#7e22ce">1–3 replicas</text>
+    <text x="120" y="126" text-anchor="middle" font-size="10" fill="#7e22ce">CPU/Mem &gt; 80%</text>
+
+    <!-- Arrow 6: HPA → Deployment -->
+    <line x1="120" y1="130" x2="120" y2="195" stroke="#c084fc" stroke-width="1.5" marker-end="url(#arrPurple)"/>
+    <circle cx="120" cy="163" r="10" fill="#1e293b"/>
+    <text x="120" y="167" text-anchor="middle" font-size="10" font-weight="700" fill="white">6</text>
+
+    <!-- DEPLOYMENT -->
+    <rect x="60" y="195" width="120" height="70" rx="10" fill="#eff6ff" stroke="#60a5fa" stroke-width="2"/>
+    <text x="120" y="220" text-anchor="middle" font-size="11" font-weight="700" fill="#1d4ed8">Deployment</text>
+    <text x="120" y="236" text-anchor="middle" font-size="10" fill="#1d4ed8">nginx-unprivileged</text>
+    <text x="120" y="252" text-anchor="middle" font-size="10" fill="#1d4ed8">port 8080</text>
+
+    <!-- Arrow 1: Deployment → Pod (dashed) -->
+    <line x1="120" y1="265" x2="120" y2="335" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arr)"/>
+    <circle cx="120" cy="300" r="10" fill="#1e293b"/>
+    <text x="120" y="304" text-anchor="middle" font-size="10" font-weight="700" fill="white">1</text>
+
+    <!-- POD / CONTAINER (dashed) -->
+    <rect x="60" y="335" width="120" height="55" rx="10" fill="none" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="6,3"/>
+    <text x="120" y="358" text-anchor="middle" font-size="11" font-weight="600" fill="#475569">Pod / Container</text>
+    <text x="120" y="374" text-anchor="middle" font-size="10" fill="#475569">nginx-unprivileged</text>
+
+    <!-- Arrow (no number): Pod → PVC (dashed) -->
+    <line x1="120" y1="390" x2="120" y2="450" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arr)"/>
+
+    <!-- Arrow 4: Deployment left → down → right into PVC -->
+    <path d="M 60,230 L 28,230 L 28,475 L 60,475" fill="none" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#arr)"/>
+    <circle cx="28" cy="352" r="10" fill="#1e293b"/>
+    <text x="28" y="356" text-anchor="middle" font-size="10" font-weight="700" fill="white">4</text>
+
+    <!-- PVC -->
+    <rect x="60" y="450" width="120" height="50" rx="10" fill="#f1f5f9" stroke="#64748b" stroke-width="1.5"/>
+    <text x="120" y="472" text-anchor="middle" font-size="11" font-weight="600" fill="#334155">PVC</text>
+    <text x="120" y="488" text-anchor="middle" font-size="10" fill="#334155">PersistentVolume</text>
+
+    <!-- SECRET -->
+    <rect x="340" y="70" width="140" height="60" rx="10" fill="#fff7ed" stroke="#fb923c" stroke-width="1.5"/>
+    <text x="410" y="94" text-anchor="middle" font-size="11" font-weight="600" fill="#9a3412">Secret</text>
+    <text x="410" y="110" text-anchor="middle" font-size="10" fill="#9a3412">POSTGRES_USER</text>
+    <text x="410" y="124" text-anchor="middle" font-size="10" fill="#9a3412">POSTGRES_PASSWORD</text>
+
+    <!-- Arrow 5: Secret → Deployment -->
+    <line x1="340" y1="100" x2="182" y2="215" stroke="#fb923c" stroke-width="1.5" marker-end="url(#arrOrange)"/>
+    <circle cx="261" cy="158" r="10" fill="#1e293b"/>
+    <text x="261" y="162" text-anchor="middle" font-size="10" font-weight="700" fill="white">5</text>
+
+    <!-- INTERNET -->
+    <rect x="560" y="205" width="110" height="50" rx="10" fill="#e0f2fe" stroke="#38bdf8" stroke-width="1.5"/>
+    <text x="615" y="226" text-anchor="middle" font-size="11" font-weight="600" fill="#0369a1">Internet</text>
+    <text x="615" y="242" text-anchor="middle" font-size="10" fill="#0369a1">(Browser)</text>
+
+    <!-- ROUTE -->
+    <rect x="410" y="205" width="110" height="50" rx="10" fill="#f0fdf4" stroke="#4ade80" stroke-width="1.5"/>
+    <text x="465" y="226" text-anchor="middle" font-size="11" font-weight="600" fill="#166534">Route</text>
+    <text x="465" y="242" text-anchor="middle" font-size="10" fill="#166534">TLS edge</text>
+
+    <!-- Arrow (no number): Internet → Route -->
+    <line x1="560" y1="230" x2="522" y2="230" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#arr)"/>
+
+    <!-- SERVICE -->
+    <rect x="260" y="205" width="110" height="50" rx="10" fill="#f0fdf4" stroke="#4ade80" stroke-width="1.5"/>
+    <text x="315" y="226" text-anchor="middle" font-size="11" font-weight="600" fill="#166534">Service</text>
+    <text x="315" y="242" text-anchor="middle" font-size="10" fill="#166534">port 8080</text>
+
+    <!-- Arrow 3: Route → Service -->
+    <line x1="410" y1="230" x2="372" y2="230" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#arr)"/>
+    <circle cx="391" cy="230" r="10" fill="#1e293b"/>
+    <text x="391" y="234" text-anchor="middle" font-size="10" font-weight="700" fill="white">3</text>
+
+    <!-- Arrow 2: Service → Pod (diagonal) -->
+    <line x1="275" y1="255" x2="170" y2="345" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#arr)"/>
+    <circle cx="222" cy="300" r="10" fill="#1e293b"/>
+    <text x="222" y="304" text-anchor="middle" font-size="10" font-weight="700" fill="white">2</text>
+  </svg>
+
+  <!-- SIDEBAR -->
+  <div class="sidebar">
+    <div class="snippet">
+      <div class="snippet-header">
+        <div class="badge">1</div>
+        <span class="snippet-label">Deployment → Pod &nbsp;<span style="color:#475569">030-Deployment.yaml</span></span>
+      </div>
+      <pre><span style="color:#475569">spec:</span>
+  <span class="key">selector:</span>
+    <span class="key">matchLabels:</span>
+      <span class="val">app: html-openshift-app</span></pre>
+    </div>
+
+    <div class="snippet">
+      <div class="snippet-header">
+        <div class="badge">2</div>
+        <span class="snippet-label">Service → Pod &nbsp;<span style="color:#475569">040-Service.yaml</span></span>
+      </div>
+      <pre><span style="color:#475569">spec:</span>
+  <span class="key">selector:</span>
+    <span class="val">app: html-openshift-app</span></pre>
+    </div>
+
+    <div class="snippet">
+      <div class="snippet-header">
+        <div class="badge">3</div>
+        <span class="snippet-label">Route → Service &nbsp;<span style="color:#475569">050-Route.yaml</span></span>
+      </div>
+      <pre><span style="color:#475569">spec:</span>
+  <span class="key">to:</span>
+    <span class="key">kind:</span> <span class="val">Service</span>
+    <span class="key">name:</span> <span class="val">html-openshift-app</span></pre>
+    </div>
+
+    <div class="snippet">
+      <div class="snippet-header">
+        <div class="badge">4</div>
+        <span class="snippet-label">Deployment → PVC &nbsp;<span style="color:#475569">030-Deployment.yaml</span></span>
+      </div>
+      <pre><span style="color:#475569">spec:</span>
+<span style="color:#475569">  template:</span>
+<span style="color:#475569">    spec:</span>
+<span style="color:#475569">      volumes:</span>
+        - <span class="key">persistentVolumeClaim:</span>
+            <span class="key">claimName:</span> <span class="val">html-openshift-app</span></pre>
+    </div>
+
+    <div class="snippet">
+      <div class="snippet-header">
+        <div class="badge">5</div>
+        <span class="snippet-label">Secret → Deployment &nbsp;<span style="color:#475569">030-Deployment.yaml</span></span>
+      </div>
+      <pre><span style="color:#475569">spec:</span>
+<span style="color:#475569">  template:</span>
+<span style="color:#475569">    spec:</span>
+<span style="color:#475569">      containers:</span>
+        - <span class="key">env:</span>
+          - <span class="key">valueFrom:</span>
+              <span class="key">secretKeyRef:</span>
+                <span class="key">name:</span> <span class="val">html-openshift-app</span></pre>
+    </div>
+
+    <div class="snippet">
+      <div class="snippet-header">
+        <div class="badge">6</div>
+        <span class="snippet-label">HPA → Deployment &nbsp;<span style="color:#475569">060-HPA.yaml</span></span>
+      </div>
+      <pre><span style="color:#475569">spec:</span>
+  <span class="key">scaleTargetRef:</span>
+    <span class="key">kind:</span> <span class="val">Deployment</span>
+    <span class="key">name:</span> <span class="val">html-openshift-app</span></pre>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
