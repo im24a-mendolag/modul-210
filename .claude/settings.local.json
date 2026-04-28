@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(docker run *)",
+      "WebFetch(domain:docs.docker.com)",
+      "Bash(docker compose *)"
+    ]
+  }
+}

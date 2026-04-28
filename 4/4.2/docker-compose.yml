@@ -1,0 +1,7 @@
+name: bzz210-4-2
+
+services:
+  web:
+    image: ghcr.io/im24a-mendolag/bzz210-web:latest
+    ports:
+      - "8080:80"
