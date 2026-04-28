@@ -24,11 +24,11 @@ jobs:
         with:
           context: ./6/6.2
           push: true
-          tags: ghcr.io/im24a-mendolag/html-openshift-app:v1
+          tags: ghcr.io/im24a-mendolag/html-openshift-app:v${{ github.run_number }}
 
       - name: Deploy to AppuIO
         run: |
           curl -LO https://mirror.openshift.com/pub/openshift-v4/clients/ocp/latest/openshift-client-linux.tar.gz
           tar -xf openshift-client-linux.tar.gz
           ./oc login ${{ secrets.OPENSHIFT_SERVER }} --token=${{ secrets.OPENSHIFT_TOKEN }} --insecure-skip-tls-verify
-          ./oc rollout restart deployment/html-openshift-app -n ${{ secrets.OPENSHIFT_NAMESPACE }}
+          ./oc set image deployment/html-openshift-app html-openshift-app=ghcr.io/im24a-mendolag/html-openshift-app:v${{ github.run_number }} -n ${{ secrets.OPENSHIFT_NAMESPACE }}
