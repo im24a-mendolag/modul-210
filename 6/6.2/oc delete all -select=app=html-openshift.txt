@@ -1,0 +1,1 @@
+oc delete all -select=app=html-openshift-app
