@@ -16,7 +16,8 @@
       "PowerShell(Move-Item c:/ims/bzz/210/full/030-Deployment.yaml c:/ims/bzz/210/full/with-deployment/)",
       "PowerShell(Move-Item c:/ims/bzz/210/full/040-Service.yaml c:/ims/bzz/210/full/with-deployment/)",
       "PowerShell(Move-Item c:/ims/bzz/210/full/050-Route.yaml c:/ims/bzz/210/full/with-deployment/)",
-      "PowerShell(Move-Item c:/ims/bzz/210/full/060-HPA.yaml c:/ims/bzz/210/full/with-deployment/)"
+      "PowerShell(Move-Item c:/ims/bzz/210/full/060-HPA.yaml c:/ims/bzz/210/full/with-deployment/)",
+      "Bash(git fetch *)"
     ],
     "additionalDirectories": [
       "c:\\ims\\bzz\\210\\6\\6.2\\full"
